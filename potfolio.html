@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Jai Suryaa T. N. - Data Analyst Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lottie -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        'brand-black': '#030303',
+                        'brand-gray': '#0a0a0a',
+                        'brand-green': '#22c55e',
+                        'brand-blue': '#3b82f6',
+                        'brand-purple': '#a855f7',
+                        'neon-green': '#00ff9d',
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                        'wave': 'wave 2.5s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 10px #22c55e20' },
+                            '50%': { boxShadow: '0 0 25px #22c55e60' }
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        wave: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '10%': { transform: 'rotate(14deg)' },
+                            '20%': { transform: 'rotate(-8deg)' },
+                            '30%': { transform: 'rotate(14deg)' },
+                            '40%': { transform: 'rotate(-4deg)' },
+                            '50%': { transform: 'rotate(10deg)' },
+                            '60%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(0deg)' },
+                        },
+                        blink: {
+                            '0%, 48%, 52%, 100%': { transform: 'scaleY(1)' },
+                            '50%': { transform: 'scaleY(0.1)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #030303;
+            color: #e5e5e5;
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 4px; }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px; height: 8px; background: #22c55e;
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999; pointer-events: none;
+        }
+        .cursor-outline {
+            width: 40px; height: 40px; border: 1px solid rgba(34, 197, 94, 0.5);
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9998; pointer-events: none;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        body:hover .cursor-outline.hovered {
+            width: 60px; height: 60px;
+            background-color: rgba(34, 197, 94, 0.1);
+            border-color: #22c55e;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Spotlight Card */
+        .spotlight-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            z-index: 1;
+            --intensity: 0; 
+            --x: 0px;
+            --y: 0px;
+        }
+
+        .spotlight-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            background: radial-gradient(800px circle at var(--x) var(--y), rgba(34, 197, 94, 0.15), transparent 40%);
+            opacity: var(--intensity);
+            transition: opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .spotlight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            border-radius: inherit;
+            padding: 1px;
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(34, 197, 94, 0.5), transparent 40%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: var(--intensity);
+        }
+
+        /* 3D Tilt Card */
+        .tilt-card { transform-style: preserve-3d; transform: perspective(1000px); }
+        .tilt-content { transform: translateZ(20px); }
+        
+        /* Gradient Border */
+        .gradient-border { position: relative; background: rgba(20, 20, 20, 0.6); border-radius: 1rem; z-index: 1; }
+        .gradient-border::before {
+            content: ""; position: absolute; inset: -2px; border-radius: 1.1rem;
+            background: linear-gradient(45deg, #22c55e, #3b82f6, #a855f7);
+            z-index: -1; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .gradient-border:hover::before { opacity: 1; }
+
+        /* Typewriter Cursor */
+        .cursor-type { display: inline-block; width: 3px; background-color: #22c55e; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Stroke Text */
+        .stroke-text { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3); color: transparent; }
+
+        #network-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.3; pointer-events: none; }
+
+        /* Window Shutter Effects */
+        .shutter-top, .shutter-bottom {
+            position: absolute; left: 0; width: 100%; height: 50%;
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(5px); z-index: 15;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .shutter-top { top: 0; transform-origin: top; }
+        .shutter-bottom { bottom: 0; transform-origin: bottom; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: none; }
+        .pour-container:hover .shutter-top { transform: translateY(-100%) scaleY(0); opacity: 0; }
+        .pour-container:hover .shutter-bottom { transform: translateY(100%) scaleY(0); opacity: 0; }
+
+        /* --- BOY CHARACTER STYLES --- */
+        .speech-bubble {
+            opacity: 0;
+            transform: translateY(10px) scale(0.9);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+        .speech-bubble.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .boy-mouth { transition: d 0.3s ease; }
+        .boy-eyelid { transition: all 0.3s ease; }
+        .boy-eyebrow { transition: transform 0.3s ease; }
+        .boy-pupil { transition: transform 0.1s ease-out; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-green selection:text-black">
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Background Canvas -->
+    <canvas id="network-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 px-6 md:px-16 py-6 flex justify-between items-center top-0 left-0 bg-black/60 backdrop-blur-xl border-b border-white/5 transition-all duration-300" id="navbar">
+        <a href="#" class="text-6xl font-bold tracking-tighter uppercase font-mono hover-target text-white group">
+            Sri Jai Suryaa <span class="text-brand-green group-hover:shadow-[0_0_15px_#22c55e] transition-all duration-300">T.N.</span>
+        </a>
+        
+        <div class="hidden md:flex gap-12 font-mono text-sm uppercase tracking-widest text-gray-400">
+            <a href="#about" class="hover:text-white transition-colors hover-target relative group text-2xl">About<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green transition-all duration-300 group-hover:w-full"></span></a>
+            <a href="#experience" class="hover:text-white transition-colors hover-target relative group text-2xl">Experience<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green transition-all duration-300 group-hover:w-full"></span></a>
+            <a href="#projects" class="hover:text-white transition-colors hover-target relative group text-2xl">Projects<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-green transition-all duration-300 group-hover:w-full"></span></a>
+            <a href="#contact" class="hover:text-brand-green hover-target relative group text-2xl">Contact</a>
+        </div>
+
+        <button class="md:hidden text-white hover-target" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-black/95 z-40 flex flex-col items-center justify-center gap-8 text-2xl uppercase font-bold backdrop-blur-xl transition-all">
+        <a href="#about" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="hover:text-brand-green">About</a>
+        <a href="#experience" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="hover:text-brand-green">Experience</a>
+        <a href="#projects" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="hover:text-brand-green">Projects</a>
+        <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="hover:text-brand-green">Contact</a>
+        <button class="absolute top-6 right-6 p-2 text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center px-6 md:px-20 pt-32 relative overflow-hidden">
+        <div class="absolute top-0 -left-4 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-blob"></div>
+        <div class="absolute top-1/2 right-0 w-[600px] h-[600px] bg-brand-green/15 rounded-full mix-blend-screen filter blur-[140px] animate-blob animation-delay-2000"></div>
+        
+        <div class="w-full max-w-[3500px] mx-auto z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="order-2 lg:order-1" data-aos="fade-right">
+                <div class="inline-flex items-center gap-3 mb-8">
+                    <span class="w-4 h-4 bg-brand-green rounded-full animate-pulse-glow"></span>
+                    <p class="font-mono text-brand-green text-3xl tracking-widest uppercase">Data Analyst</p>
+                </div>
+                
+                <h1 class="text-9xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-tight mb-10 text-white min-h-[180px] md:min-h-[280px]">
+                    Building <br>
+                    <span id="typewriter" class="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-brand-blue whitespace-nowrap"></span><span class="cursor-type">&nbsp;</span>
+                </h1>
+                
+                <p class="text-lg md:text-5xl text-gray-400 max-w-3xl mb-12 font-light leading-relaxed">
+                    B.Tech CSE Data Science Student at Vel Tech University. 
+                    Merging technical rigor with sustainability to drive intelligent decision-making.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-6">
+                    <a href="#projects" class="px-12 py-6 bg-white text-black font-bold uppercase tracking-wider hover:bg-brand-green hover:text-white transition-all duration-300 rounded-sm hover-target transform hover:-translate-y-1 text-center text-lg">
+                        View Projects
+                    </a>
+                    <a href="#contact" class="px-12 py-6 border border-white/20 text-white font-bold uppercase tracking-wider hover:border-brand-green hover:text-brand-green transition-all duration-300 rounded-sm hover-target text-center text-lg">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+            
+            <div class="order-1 lg:order-2 flex justify-center lg:justify-end" data-aos="fade-left">
+                <div id="lottie-hero" class="w-full max-w-2xl h-[500px] md:h-[700px] relative z-10 animate-float"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marquee Section -->
+    <div class="py-20 border-y border-white/5 bg-brand-gray/30 backdrop-blur-sm relative overflow-hidden" id="marquee">
+        <div class="absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-[#030303] to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-[#030303] to-transparent z-10 pointer-events-none"></div>
+
+        <div class="flex whitespace-nowrap overflow-hidden relative">
+            <div class="flex animate-marquee min-w-full items-center">
+                <span class="text-6xl md:text-8xl font-black text-gray-800 mx-16 hover:text-brand-green transition-colors duration-300 cursor-default">PYTHON</span>
+                <span class="text-6xl md:text-8xl font-black stroke-text mx-16 cursor-default">SQL</span>
+                <span class="text-6xl md:text-8xl font-black text-gray-800 mx-16 hover:text-brand-blue transition-colors duration-300 cursor-default">POWER BI</span>
+                <span class="text-6xl md:text-8xl font-black stroke-text mx-16 cursor-default">EXCEL</span>
+                <span class="text-6xl md:text-8xl font-black text-gray-800 mx-16 hover:text-brand-purple transition-colors duration-300 cursor-default">NLP</span>
+                <span class="text-6xl md:text-8xl font-black stroke-text mx-16 cursor-default">DOCKER</span>
+                <span class="text-6xl md:text-8xl font-black text-gray-800 mx-16 hover:text-brand-green transition-colors duration-300 cursor-default">ESG</span>
+            </div>
+            <div class="flex animate-marquee min-w-full items-center absolute top-0 left-full">
+                <span class="text-6xl md:text-8xl font-black text-gray-800 mx-16 hover:text-brand-green transition-colors duration-300 cursor-default">PYTHON</span>
+                <span class="text-6xl md:text-8xl font-black stroke-text mx-16 cursor-default">SQL</span>
+                <span class="text-6xl md:text-8xl font-black text-gray-800 mx-16 hover:text-brand-blue transition-colors duration-300 cursor-default">POWER BI</span>
+                <span class="text-6xl md:text-8xl font-black stroke-text mx-16 cursor-default">EXCEL</span>
+                <span class="text-6xl md:text-8xl font-black text-gray-800 mx-16 hover:text-brand-purple transition-colors duration-300 cursor-default">NLP</span>
+                <span class="text-6xl md:text-8xl font-black stroke-text mx-16 cursor-default">DOCKER</span>
+                <span class="text-6xl md:text-8xl font-black text-gray-800 mx-16 hover:text-brand-green transition-colors duration-300 cursor-default">ESG</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Impact Counter Section -->
+    <section class="py-24 border-b border-white/5 bg-brand-gray/20 backdrop-blur-sm" id="stats">
+        <div class="w-full max-w-[3500px] mx-auto px-6 md:px-20 grid grid-cols-2 md:grid-cols-4 gap-16">
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="0">
+                <h3 class="text-8xl md:text-9xl font-black text-white mb-4"><span class="counter" data-target="70000">0</span>+</h3>
+                <p class="text-base font-mono text-gray-500 uppercase tracking-widest">Survey Respondents</p>
+            </div>
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="100">
+                <h3 class="text-8xl md:text-9xl font-black text-white mb-4"><span class="counter" data-target="13000">0</span>+</h3>
+                <p class="text-base font-mono text-gray-500 uppercase tracking-widest">Tweets Analyzed</p>
+            </div>
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="200">
+                <h3 class="text-8xl md:text-9xl font-black text-white mb-4"><span class="counter" data-target="10000">0</span>+</h3>
+                <p class="text-base font-mono text-gray-500 uppercase tracking-widest">Data Points Clustered</p>
+            </div>
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="300">
+                <h3 class="text-8xl md:text-9xl font-black text-white mb-4">8.0</h3>
+                <p class="text-base font-mono text-gray-500 uppercase tracking-widest">CGPA</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section (Timeline Layout) -->
+    <section class="py-32 md:py-40 px-6 md:px-20 relative" id="experience">
+        <div class="w-full max-w-[3500px] mx-auto">
+            <h2 class="text-xl md:text-6xl font-mono text-brand-green uppercase tracking-widest mb-32 flex items-center gap-6" data-aos="fade-right">
+                <span class="inline-block w-16 h-[2px] bg-brand-green"></span> Professional Experience
+            </h2>
+
+            <!-- Timeline Container -->
+            <div class="relative">
+                <!-- Center Line (Desktop) -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-transparent via-brand-green/30 to-transparent"></div>
+
+                <!-- Timeline Item 1: Reput AI (Left) -->
+                <div class="mb-24 flex flex-col md:flex-row items-center justify-between w-full">
+                    <div class="order-1 md:w-[45%] w-full" data-aos="fade-right">
+                        <div class="gradient-border hover-target tilt-card-wrapper h-full">
+                            <div class="bg-brand-gray p-12 rounded-2xl tilt-card h-full relative">
+                                <div class="hidden md:block absolute top-1/2 -right-[11.5%] w-6 h-6 bg-brand-green rounded-full shadow-[0_0_20px_#22c55e] z-10 translate-y-[-50%]">
+                                    <div class="absolute inset-0 bg-brand-green rounded-full animate-ping opacity-75"></div>
+                                </div>
+                                
+                                <div class="tilt-content">
+                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
+                                        <div>
+                                            <h3 class="text-9xl font-bold text-white mb-2">Reput AI</h3>
+                                            <p class="text-brand-purple font-mono text-3xl">Data Analyst Intern | Remote</p>
+                                        </div>
+                                        <span class="px-5 py-2 border border-white/10 rounded-full text-2xl font-mono text-gray-400 mt-2 sm:mt-0 bg-white/5">Jul 2025 - Present</span>
+                                    </div>
+                                    <ul class="space-y-5 text-gray-400 text-2xl leading-relaxed">
+                                        <li class="flex gap-4"><i class="fas fa-check text-brand-green mt-1 shrink-0"></i> <span>Developed and optimized an AI-powered chatbot, fixing bugs to improve performance.</span></li>
+                                        <li class="flex gap-4"><i class="fas fa-check text-brand-green mt-1 shrink-0"></i> <span>Worked on sustainability reports (BRSR, GHG, GRI) to support ESG compliance initiatives.</span></li>
+                                        <li class="flex gap-4"><i class="fas fa-check text-brand-green mt-1 shrink-0"></i> <span>Collaborated with BI developers to analyze complex datasets for decision-making.</span></li>
+                                        <li class="flex gap-4"><i class="fas fa-check text-brand-green mt-1 shrink-0"></i> <span>Assisted animation team with data-driven insights to enhance user engagement.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 md:w-[45%] hidden md:block"></div>
+                </div>
+
+                <!-- Timeline Item 2: KultureHire (Right) -->
+                <div class="mb-24 flex flex-col md:flex-row-reverse items-center justify-between w-full">
+                    <div class="order-1 md:w-[45%] w-full" data-aos="fade-left">
+                        <div class="gradient-border hover-target tilt-card-wrapper h-full">
+                            <div class="bg-brand-gray p-12 rounded-2xl tilt-card h-full relative">
+                                <div class="hidden md:block absolute top-1/2 -left-[11.5%] w-6 h-6 bg-brand-blue rounded-full shadow-[0_0_20px_#3b82f6] z-10 translate-y-[-50%]">
+                                    <div class="absolute inset-0 bg-brand-blue rounded-full animate-ping opacity-75"></div>
+                                </div>
+
+                                <div class="tilt-content">
+                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
+                                        <div>
+                                            <h3 class="text-9xl font-bold text-white mb-2">KultureHire</h3>
+                                            <p class="text-brand-blue font-mono text-base">Data Analyst Intern | Remote</p>
+                                        </div>
+                                        <span class="px-5 py-2 border border-white/10 rounded-full text-2xl font-mono text-gray-400 mt-2 sm:mt-0 bg-white/5">Dec 2024 - Feb 2025</span>
+                                    </div>
+                                    <ul class="space-y-5 text-gray-400 text-2xl leading-relaxed">
+                                        <li class="flex gap-4"><i class="fas fa-check text-brand-green mt-1 shrink-0"></i> <span>Collected and cleaned survey data from 70,000+ Gen Z respondents.</span></li>
+                                        <li class="flex gap-4"><i class="fas fa-check text-brand-green mt-1 shrink-0"></i> <span>Utilized SQL to query large datasets for trend analysis and segmentation.</span></li>
+                                        <li class="flex gap-4"><i class="fas fa-check text-brand-green mt-1 shrink-0"></i> <span>Applied hypothesis testing to validate assumptions on career preferences.</span></li>
+                                        <li class="flex gap-4"><i class="fas fa-check text-brand-green mt-1 shrink-0"></i> <span>Built interactive Power BI dashboards to visualize skill gaps and location preferences.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 md:w-[45%] hidden md:block"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="py-32 px-6 md:px-20 bg-brand-gray/20" id="projects">
+        <div class="w-full max-w-[3500px] mx-auto">
+            <h2 class="text-6xl font-mono text-brand-green uppercase tracking-widest mb-24 flex items-center gap-4" data-aos="fade-right">
+                <span class="inline-block w-12 h-[2px] bg-brand-green"></span> Key Projects
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                <!-- Project 1 -->
+                <div class="spotlight-card group hover-target pour-container min-h-[500px]" data-aos="zoom-in-up">
+                    <div class="spotlight-overlay"></div>
+                    <div class="shutter-top flex items-end justify-center pb-4"><i class="fas fa-users text-7xl text-brand-green/30"></i></div>
+                    <div class="shutter-bottom flex items-start justify-center pt-4"><span class="font-mono text-base text-brand-green/50 tracking-widest">OPENING...</span></div>
+
+                    <div class="p-12 h-full flex flex-col relative z-10">
+                        <div class="mb-10 p-6 bg-brand-green/10 rounded-2xl w-fit">
+                            <i class="fas fa-users text-4xl text-brand-green"></i>
+                        </div>
+                        <h3 class="text-6xl font-bold text-white mb-6 group-hover:text-brand-green transition-colors">Customer Segmentation</h3>
+                        <p class="text-gray-400 text-2xl mb-8 flex-grow leading-relaxed">
+                            Analyzed 10,000+ customer data points using K-Means Clustering. Implemented PCA for dimensionality reduction and Elbow method for optimization.
+                        </p>
+                        <div class="flex justify-center gap-8 mt-auto tool-pills-container relative overflow-hidden h-20 items-end">
+                            <i class="fab fa-python text-5xl text-[#3776AB] tool-pill opacity-0" title="Python"></i>
+                            <i class="fas fa-brain text-5xl text-orange-400 tool-pill opacity-0" title="Scikit-learn"></i>
+                            <i class="fas fa-chart-area text-5xl text-blue-400 tool-pill opacity-0" title="Seaborn"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="spotlight-card group hover-target pour-container min-h-[500px]" data-aos="zoom-in-up" data-aos-delay="100">
+                    <div class="spotlight-overlay"></div>
+                    <div class="shutter-top flex items-end justify-center pb-4"><i class="fas fa-chart-pie text-7xl text-brand-blue/30"></i></div>
+                    <div class="shutter-bottom flex items-start justify-center pt-4"><span class="font-mono text-base text-brand-blue/50 tracking-widest">OPENING...</span></div>
+
+                    <div class="p-12 h-full flex flex-col relative z-10">
+                        <div class="mb-10 p-6 bg-brand-blue/10 rounded-2xl w-fit">
+                            <i class="fas fa-chart-pie text-4xl text-brand-blue"></i>
+                        </div>
+                        <h3 class="text-6xl font-bold text-white mb-6 group-hover:text-brand-blue transition-colors">Gen Z Data Analysis</h3>
+                        <p class="text-gray-400 text-2xl mb-8 flex-grow leading-relaxed">
+                            Market research on 70k+ respondents. Cleaned data via SQL and built Power BI dashboards to visualize career aspirations and job expectations.
+                        </p>
+                        <div class="flex justify-center gap-8 mt-auto tool-pills-container relative overflow-hidden h-20 items-end">
+                            <i class="fas fa-chart-column text-5xl text-[#F2C811] tool-pill opacity-0" title="Power BI"></i>
+                            <i class="fas fa-database text-5xl text-[#F29111] tool-pill opacity-0" title="SQL"></i>
+                            <i class="fas fa-file-excel text-5xl text-[#217346] tool-pill opacity-0" title="Excel"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="spotlight-card group hover-target pour-container min-h-[500px]" data-aos="zoom-in-up" data-aos-delay="200">
+                    <div class="spotlight-overlay"></div>
+                    <div class="shutter-top flex items-end justify-center pb-4"><i class="fas fa-comments text-7xl text-brand-purple/30"></i></div>
+                    <div class="shutter-bottom flex items-start justify-center pt-4"><span class="font-mono text-base text-brand-purple/50 tracking-widest">OPENING...</span></div>
+
+                    <div class="p-12 h-full flex flex-col relative z-10">
+                        <div class="mb-10 p-6 bg-brand-purple/10 rounded-2xl w-fit">
+                            <i class="fas fa-comments text-4xl text-brand-purple"></i>
+                        </div>
+                        <h3 class="text-6xl font-bold text-white mb-6 group-hover:text-brand-purple transition-colors">Tweet Sentiment Analysis</h3>
+                        <p class="text-gray-400 text-2xl mb-8 flex-grow leading-relaxed">
+                            Processed 13,000+ tweets for sentiment classification. Compared TextBlob baseline with supervised ML models. Used Stemming & Normalization.
+                        </p>
+                        <div class="flex justify-center gap-8 mt-auto tool-pills-container relative overflow-hidden h-20 items-end">
+                            <i class="fas fa-language text-5xl text-pink-400 tool-pill opacity-0" title="NLP"></i>
+                            <i class="fas fa-table text-5xl text-white tool-pill opacity-0" title="Pandas"></i>
+                            <i class="fas fa-spell-check text-5xl text-gray-400 tool-pill opacity-0" title="TextBlob"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Education Grid -->
+    <section class="py-32 px-6 md:px-20" id="skills">
+        <div class="w-full max-w-[3500px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24">
+            
+            <!-- Education -->
+            <div data-aos="fade-right">
+                <h3 class="text-6xl font-bold text-white mb-12 flex items-center gap-6">
+                    <i class="fas fa-graduation-cap text-brand-green"></i> Education
+                </h3>
+                <div class="border-l-2 border-white/10 pl-12 relative space-y-20">
+                    <div class="relative">
+                        <span class="absolute -left-[53px] top-1 w-7 h-7 rounded-full bg-brand-green border-4 border-[#030303]"></span>
+                        <h4 class="text-4xl font-bold text-white">Vel Tech Rangarajan Dr.Sagunthala R&D Institute</h4>
+                        <p class="text-gray-400 text-3xl mt-3">B.Tech in CSE (Data Science) | 2022 - 2026</p>
+                        <p class="text-brand-green font-mono text-3xl mt-2">GPA: 8.0 / 10</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-4xl font-bold text-white mb-8">Certifications</h4>
+                        <ul class="space-y-6">
+                            <li class="bg-white/5 p-6 rounded-2xl hover:bg-white/10 transition-colors cursor-default border border-white/5 hover:border-white/10">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-gray-200 text-3xl">IBM Data Analyst</span>
+                                    <i class="fab fa-ibm text-blue-400 text-4xl"></i>
+                                </div>
+                                <p class="text-xl text-gray-500 mt-3">Data Analysis with Python, AI</p>
+                            </li>
+                            <li class="bg-white/5 p-6 rounded-2xl hover:bg-white/10 transition-colors cursor-default border border-white/5 hover:border-white/10">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-gray-200 text-3xl">MeriSKILL Data Analyst</span>
+                                    <i class="fas fa-chart-line text-green-400 text-4xl"></i>
+                                </div>
+                                <p class="text-xl text-gray-500 mt-3">Data Storytelling & Visualization</p>
+                            </li>
+                            <li class="bg-white/5 p-6 rounded-2xl hover:bg-white/10 transition-colors cursor-default border border-white/5 hover:border-white/10">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-gray-200 text-3xl">Python for Data Science & AI</span>
+                                    <i class="fab fa-python text-yellow-400 text-4xl"></i>
+                                </div>
+                                <p class="text-xl text-gray-500 mt-3">Advanced Python techniques for AI models</p>
+                            </li>
+                            <li class="text-xl text-gray-500 italic mt-4 pl-4 border-l-2 border-brand-green/50">
+                                Continuous Learning: And various other professional certifications in Data Science & Analytics.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills with Logos -->
+            <div data-aos="fade-left">
+                <h3 class="text-6xl font-bold text-white mb-12 flex items-center gap-6">
+                    <i class="fas fa-code text-brand-blue"></i> Technical Stack
+                </h3>
+                
+                <div class="space-y-16">
+                    <!-- Languages -->
+                    <div>
+                        <h4 class="text-xl font-mono text-gray-500 uppercase mb-8 tracking-widest">Languages</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fab fa-python text-5xl text-gray-400 group-hover:text-[#3776AB] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Python</span>
+                                </div>
+                            </div>
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fas fa-database text-5xl text-gray-400 group-hover:text-[#F29111] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">SQL</span>
+                                </div>
+                            </div>
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fab fa-r-project text-5xl text-gray-400 group-hover:text-[#276DC3] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">R</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technologies -->
+                    <div>
+                        <h4 class="text-base font-mono text-gray-500 uppercase mb-8 tracking-widest">Technologies</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fas fa-chart-column text-5xl text-gray-400 group-hover:text-[#F2C811] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Power BI</span>
+                                </div>
+                            </div>
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fab fa-docker text-5xl text-gray-400 group-hover:text-[#2496ED] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Docker</span>
+                                </div>
+                            </div>
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fab fa-microsoft text-5xl text-gray-400 group-hover:text-[#0078D4] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Azure</span>
+                                </div>
+                            </div>
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fas fa-file-excel text-5xl text-gray-400 group-hover:text-[#217346] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Excel</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div>
+                        <h4 class="text-base font-mono text-gray-500 uppercase mb-8 tracking-widest">Developer Tools</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fas fa-code text-5xl text-gray-400 group-hover:text-[#F37626] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Jupyter</span>
+                                </div>
+                            </div>
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fas fa-laptop-code text-5xl text-gray-400 group-hover:text-brand-purple transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">RStudio</span>
+                                </div>
+                            </div>
+                            <div class="spotlight-card group p-8 flex items-center gap-5 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 flex items-center gap-5">
+                                    <i class="fab fa-google text-5xl text-gray-400 group-hover:text-[#F9AB00] transition-colors"></i>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Colab</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW REDESIGNED CONTACT SECTION -->
+    <section class="py-40 px-6 relative overflow-hidden" id="contact">
+        <!-- Background Mesh -->
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-green/5 to-transparent z-0"></div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand-green/20 rounded-full blur-[120px] opacity-30 z-0"></div>
+
+        <div class="w-full max-w-6xl mx-auto relative z-10" data-aos="fade-up">
+            
+            <!-- Animated Bored Boy Character -->
+            <div class="absolute -top-32 left-1/2 transform -translate-x-1/2 w-48 h-48 md:w-64 md:h-64 z-20" id="mascot">
+                <div class="absolute top-[-40px] md:top-[-60px] left-1/2 transform -translate-x-1/2 speech-bubble bg-white text-black px-8 py-4 rounded-2xl text-lg font-bold shadow-lg whitespace-nowrap">
+                    Thanks! Hurray! 🎉
+                    <div class="absolute bottom-[-6px] left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45"></div>
+                </div>
+                
+                <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-2xl">
+                    <!-- Hair (Back) -->
+                    <path d="M20 40 Q50 10 80 40" fill="#333" />
+                    <!-- Head -->
+                    <rect x="25" y="30" width="50" height="50" rx="15" fill="#f3d0b1" />
+                    <!-- Hair (Front) -->
+                    <path d="M25 30 Q50 40 75 30 L75 40 Q50 50 25 40 Z" fill="#333" />
+                    <!-- Eyes Container -->
+                    <g class="boy-eyes">
+                        <!-- Left Eye -->
+                        <g>
+                            <circle cx="40" cy="50" r="5" fill="#fff" />
+                            <circle class="boy-pupil" cx="40" cy="50" r="2" fill="#000" />
+                            <!-- Eyelid (Bored State) -->
+                            <rect class="boy-eyelid" x="35" y="45" width="10" height="5" fill="#f3d0b1" />
+                        </g>
+                        <!-- Right Eye -->
+                        <g>
+                            <circle cx="60" cy="50" r="5" fill="#fff" />
+                            <circle class="boy-pupil" cx="60" cy="50" r="2" fill="#000" />
+                            <!-- Eyelid (Bored State) -->
+                            <rect class="boy-eyelid" x="55" y="45" width="10" height="5" fill="#f3d0b1" />
+                        </g>
+                    </g>
+                    <!-- Eyebrows (Bored State: Flat) -->
+                    <g class="boy-eyebrows">
+                        <line class="boy-eyebrow" x1="35" y1="42" x2="45" y2="42" stroke="#333" stroke-width="2" stroke-linecap="round" />
+                        <line class="boy-eyebrow" x1="55" y1="42" x2="65" y2="42" stroke="#333" stroke-width="2" stroke-linecap="round" />
+                    </g>
+                    <!-- Mouth (Bored State: Straight - Defined as Flat Curve) -->
+                    <path d="M 40 70 Q 50 70 60 70" stroke="#d67c69" stroke-width="3" stroke-linecap="round" fill="none" class="boy-mouth" />
+                    <!-- Body (Simple) -->
+                    <path d="M 20 85 Q 50 80 80 85 L 80 100 L 20 100 Z" fill="#3b82f6" />
+                </svg>
+            </div>
+
+            <div class="spotlight-card p-12 md:p-24 backdrop-blur-xl shadow-2xl relative overflow-hidden group rounded-[3rem] mt-12">
+                <div class="spotlight-overlay"></div>
+                <!-- Shine Effect -->
+                <div class="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 transition-all duration-1000 group-hover:left-[100%]"></div>
+                
+                <div class="text-center relative z-10">
+                    <h2 class="text-6xl md:text-8xl font-black text-white mb-10">Let's Work Together <span class="animate-wave inline-block">👋</span></h2>
+                    <p class="text-2xl text-gray-400 mb-16 font-light max-w-4xl mx-auto leading-relaxed">
+                        I'm currently available for data analysis projects and freelance opportunities. 
+                        Let's turn your data into actionable insights.
+                    </p>
+                    
+                    <button class="magnetic-btn inline-block px-16 py-8 bg-gradient-to-r from-brand-green to-emerald-600 text-white font-bold text-2xl rounded-full shadow-[0_0_30px_rgba(34,197,94,0.4)] hover:shadow-[0_0_50px_rgba(34,197,94,0.6)] transition-all duration-300 hover-target" id="sayHelloBtn">
+                        Say Hello <i class="fas fa-paper-plane ml-3"></i>
+                    </button>
+                </div>
+
+                <div class="mt-20 flex justify-center items-center gap-12 border-t border-white/10 pt-12 relative z-10">
+                    <div class="flex gap-10">
+                        <a href="https://www.linkedin.com/in/sri-jai-suryaa-t-n-16881422b/" target="_blank" class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#0077b5] transition-all duration-300 transform hover:-translate-y-1 hover-target">
+                            <i class="fab fa-linkedin-in text-3xl"></i>
+                        </a>
+                        <a href="https://github.com/Srijaisuryaa007" target="_blank" class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#333] transition-all duration-300 transform hover:-translate-y-1 hover-target">
+                            <i class="fab fa-github text-3xl"></i>
+                        </a>
+                        <a href="tel:8072986912" class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-green-600 transition-all duration-300 transform hover:-translate-y-1 hover-target">
+                            <i class="fas fa-phone text-3xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 px-6 md:px-20 border-t border-white/5">
+        <div class="w-full max-w-[px] mx-auto flex justify-between items-center text-lg text-gray-600">
+            <p>&copy; 2025 Sri Jai Suryaa T.N.</p>
+            <p class="font-mono">Built with ❤️ & Code</p>
+        </div>
+    </footer>
+
+    <script>
+        // AOS Init
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // Typewriter Effect
+        const words = ["Intelligent Solutions", "Impactful Dashboards", "Sustainable Models"];
+        let i = 0;
+        let timer;
+
+        function typeWriter() {
+            const heading = words[i % words.length];
+            const element = document.getElementById('typewriter');
+            let currentText = "";
+            let isDeleting = false;
+            let j = 0;
+
+            function loop() {
+                element.innerHTML = currentText;
+                
+                if (isDeleting) {
+                    currentText = heading.substring(0, j--);
+                    if (currentText === "") {
+                        isDeleting = false;
+                        i++;
+                        setTimeout(typeWriter, 500);
+                        return;
+                    }
+                } else {
+                    currentText = heading.substring(0, j++);
+                    if (currentText === heading) {
+                        isDeleting = true;
+                        setTimeout(loop, 2000); // Pause at end
+                        return;
+                    }
+                }
+                setTimeout(loop, isDeleting ? 50 : 100);
+            }
+            loop();
+        }
+        typeWriter();
+
+        // 3D Tilt Effect
+        document.querySelectorAll('.tilt-card-wrapper').forEach(wrapper => {
+            const card = wrapper.querySelector('.tilt-card');
+            
+            wrapper.addEventListener('mousemove', (e) => {
+                const rect = wrapper.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -5; // Max 5deg tilt
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            wrapper.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+            });
+        });
+
+        // Magnetic Button Effect
+        const magneticBtns = document.querySelectorAll('.magnetic-btn');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+            });
+        });
+
+        // Spotlight Proximity Logic (Performance Optimized)
+        const spotlightCards = document.querySelectorAll('.spotlight-card');
+        
+        function updateSpotlight(e) {
+            spotlightCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Calculate distance to center of card
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+                
+                // Proximity threshold (start glowing when 600px away)
+                const threshold = 600;
+                let intensity = 0;
+                
+                if (dist < threshold) {
+                    intensity = 1 - (dist / threshold);
+                }
+
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+                card.style.setProperty('--intensity', intensity.toFixed(2));
+            });
+        }
+
+        // --- BOY INTERACTION LOGIC (REFINED) ---
+        const pupils = document.querySelectorAll('.boy-pupil');
+        const mascot = document.getElementById('mascot');
+        const btn = document.getElementById('sayHelloBtn');
+        let isCelebrating = false;
+
+        function updateMascotState(e) {
+            if (isCelebrating) return; // Don't interrupt celebration
+
+            const btnRect = btn.getBoundingClientRect();
+            const btnCenter = {
+                x: btnRect.left + btnRect.width / 2,
+                y: btnRect.top + btnRect.height / 2
+            };
+            
+            // Dist to button center
+            const dist = Math.hypot(e.clientX - btnCenter.x, e.clientY - btnCenter.y);
+            
+            // Threshold for "Curiosity"
+            const threshold = 150; 
+
+            if (dist < threshold) {
+                // Curious State
+                gsap.to(".boy-eyelid", { attr: { y: 42, height: 2 }, duration: 0.3 }); // Slightly wider
+                gsap.to(".boy-eyebrow", { y: -2, duration: 0.3 }); // Slightly raised
+                // Little Smile
+                gsap.to(".boy-mouth", { attr: { d: "M 40 70 Q 50 75 60 70" }, duration: 0.3 });
+            } else {
+                // Bored State (Default)
+                gsap.to(".boy-eyelid", { attr: { y: 45, height: 5 }, duration: 0.3 });
+                gsap.to(".boy-eyebrow", { y: 0, duration: 0.3 });
+                gsap.to(".boy-mouth", { attr: { d: "M 40 70 Q 50 70 60 70" }, duration: 0.3 }); // Flat Curve
+            }
+        }
+
+        function trackMascotEyes(e) {
+            const rect = mascot.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+            const radius = 2; // Constrained movement
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+
+            pupils.forEach(pupil => {
+                const baseCx = parseFloat(pupil.getAttribute('cx'));
+                const baseCy = parseFloat(pupil.getAttribute('cy'));
+                
+                // Store base if not present
+                if (!pupil.hasAttribute('data-base-cx')) {
+                    pupil.setAttribute('data-base-cx', baseCx);
+                    pupil.setAttribute('data-base-cy', baseCy);
+                }
+                
+                const originCx = parseFloat(pupil.getAttribute('data-base-cx'));
+                const originCy = parseFloat(pupil.getAttribute('data-base-cy'));
+
+                gsap.to(pupil, {
+                    attr: { cx: originCx + x, cy: originCy + y },
+                    duration: 0.1
+                });
+            });
+        }
+
+        function sayHello() {
+            isCelebrating = true;
+
+            // 1. Fully Open Eyes
+            gsap.to(".boy-eyelid", { attr: { y: 40, height: 0 }, duration: 0.2 });
+            
+            // 2. Big Eyebrows (Way up)
+            gsap.to(".boy-eyebrow", { y: -8, duration: 0.2 });
+
+            // 3. Bright Smile (Deeper curve)
+            const mouth = document.querySelector('.boy-mouth');
+            gsap.to(mouth, { attr: { d: "M 35 65 Q 50 85 65 65" }, duration: 0.3 });
+
+            // 4. Show Bubble
+            const bubble = document.querySelector('.speech-bubble');
+            bubble.classList.add('active');
+
+            // 5. Jump
+            gsap.to("#mascot", { y: -80, duration: 0.2, yoyo: true, repeat: 2 });
+
+            // Reset after 3 seconds
+            setTimeout(() => {
+                isCelebrating = false;
+                bubble.classList.remove('active');
+                // State will automatically update on next mousemove
+            }, 3000);
+            
+            // Redirect after delay
+            setTimeout(() => {
+                window.location.href = "mailto:mylambo0708@gmail.com";
+            }, 1000);
+        }
+
+        // Attach Click Handler
+        btn.addEventListener('click', sayHello);
+
+        // Global Mouse Move Listener
+        let isTicking = false;
+        window.addEventListener('mousemove', (e) => {
+            if (!isTicking) {
+                window.requestAnimationFrame(() => {
+                    updateSpotlight(e);
+                    trackMascotEyes(e); 
+                    updateMascotState(e); // Check proximity
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+        });
+
+        // "Pouring" Tools Animation Logic (Updated with Icons)
+        document.querySelectorAll('.pour-container').forEach(card => {
+            const pills = card.querySelectorAll('.tool-pill');
+            
+            // Set initial state (above container, hidden)
+            gsap.set(pills, { y: -80, opacity: 0 });
+
+            card.addEventListener('mouseenter', () => {
+                gsap.killTweensOf(pills);
+                gsap.to(pills, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.15,
+                    ease: "bounce.out"
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(pills, {
+                    y: -50,
+                    opacity: 0,
+                    duration: 0.4,
+                    stagger: 0.05,
+                    ease: "power2.in"
+                });
+            });
+        });
+
+        // Animated Counters
+        const counters = document.querySelectorAll('.counter');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-target');
+                    const duration = 2000; 
+                    const increment = target / (duration / 16);
+                    
+                    let current = 0;
+                    const updateCounter = () => {
+                        current += increment;
+                        if(current < target) {
+                            counter.innerText = Math.ceil(current).toLocaleString();
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.innerText = target.toLocaleString();
+                        }
+                    };
+                    updateCounter();
+                    observer.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => observer.observe(c));
+
+        // Lottie Animation
+        lottie.loadAnimation({
+            container: document.getElementById('lottie-hero'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'https://lottie.host/8816c4f0-32a2-4a0b-8d59-3352701469e8/p2FjF5gC5h.json'
+        });
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0 });
+            gsap.to(cursorOutline, { x: e.clientX, y: e.clientY, duration: 0.15 });
+        });
+
+        document.querySelectorAll('.hover-target, a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => cursorOutline.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovered'));
+        });
+
+        // Canvas Network
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(34, 197, 94, 0.2)';
+                ctx.fill();
+            }
+        }
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach((p, i) => {
+                p.update();
+                p.draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const d = Math.sqrt((p.x - p2.x)**2 + (p.y - p2.y)**2);
+                    if (d < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(34, 197, 94, ${0.1 - d/1500})`;
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+    </script>
+</body>
+</html>
