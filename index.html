@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -386,6 +386,36 @@
         }
         .group:hover .r-path-mini { stroke-dashoffset: 0; }
 
+        /* --- GLITTER GLOW ANIMATION FOR TAGS --- */
+        @keyframes glitter-pulse {
+            0% { 
+                box-shadow: 0 0 5px #22c55e, 0 0 10px #22c55e33; 
+                border-color: #22c55e; 
+                color: #ffffff;
+            }
+            33% { 
+                box-shadow: 0 0 15px #3b82f6, 0 0 20px #3b82f633; 
+                border-color: #3b82f6; 
+                color: #e0f2fe;
+            }
+            66% { 
+                box-shadow: 0 0 5px #a855f7, 0 0 10px #a855f733; 
+                border-color: #a855f7; 
+                color: #f3e8ff;
+            }
+            100% { 
+                box-shadow: 0 0 5px #22c55e, 0 0 10px #22c55e33; 
+                border-color: #22c55e; 
+                color: #ffffff;
+            }
+        }
+        
+        .achievement-tag {
+            animation: glitter-pulse 3s infinite linear;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
         /* --- 8. POWER BI VISUALIZATION MINI --- */
         .pbi-mini {
             display: flex;
@@ -583,7 +613,11 @@
                     <a href="#projects" class="px-12 py-6 bg-white text-black font-bold uppercase tracking-wider hover:bg-brand-green hover:text-white transition-all duration-300 rounded-sm hover-target transform hover:-translate-y-1 text-center text-lg">
                         View Projects
                     </a>
-                    <a href="#contact" class="px-12 py-6 border border-white/20 text-white font-bold uppercase tracking-wider hover:border-brand-green hover:text-brand-green transition-all duration-300 rounded-sm hover-target text-center text-lg">
+                    <!-- NEW DOWNLOAD RESUME BUTTON -->
+                    <a href="NEW_RESUME.pdf" download="Sri_Jai_Suryaa_Resume.pdf" class="px-12 py-6 border border-white/20 text-white font-bold uppercase tracking-wider hover:border-brand-green hover:text-brand-green transition-all duration-300 rounded-sm hover-target text-center text-lg flex items-center justify-center gap-3">
+                        <span>Resume</span> <i class="fas fa-download"></i>
+                    </a>
+                    <a href="#contact" class="px-12 py-6 border border-white/20 text-white font-bold uppercase tracking-wider hover:border-brand-blue hover:text-brand-blue transition-all duration-300 rounded-sm hover-target text-center text-lg">
                         Contact Me
                     </a>
                 </div>
@@ -633,18 +667,29 @@
                     I am a B.Tech Computer Science student specializing in Data Science at <strong>Vel Tech Rangarajan Dr.Sagunthala R&D Institute</strong>, maintaining a GPA of <strong>8.0/10</strong>. My passion lies in transforming raw data into actionable insights that drive business growth and sustainability.
                 </p>
                 <p class="text-gray-400 text-xl leading-relaxed mb-8 hover-reveal-gray">
-                    With professional experience at <strong>Reput AI</strong> and <strong>KultureHire</strong>, I have developed AI-powered chatbots, conducted extensive market research on Gen Z trends, and contributed to critical ESG sustainability reporting (BRSR, GHG, GRI). I thrive on solving complex problems using tools like Python, SQL, and Power BI.
+                    With professional experience at <strong>Reput AI</strong> and <strong>KultureHire</strong>, I have developed AI-powered chatbots, conducted extensive market research on Gen Z trends, and contributed to critical business intelligence reports. I thrive on solving complex problems using tools like Python, SQL, and Power BI.
                 </p>
                 
                 <div class="flex flex-wrap gap-4 mt-8">
-                    <span class="px-6 py-3 border border-brand-green/30 rounded-full text-brand-green font-mono hover:bg-brand-green/10 transition-colors cursor-default">
+                    <!-- Continuously Glowing Achievement Tags -->
+                    <span class="px-6 py-3 border rounded-full font-mono font-bold cursor-default achievement-tag">
                         <i class="fas fa-robot mr-2"></i> AI & Chatbots
                     </span>
-                    <span class="px-6 py-3 border border-brand-blue/30 rounded-full text-brand-blue font-mono hover:bg-brand-blue/10 transition-colors cursor-default">
-                        <i class="fas fa-leaf mr-2"></i> ESG Reporting
+                    <span class="px-6 py-3 border rounded-full font-mono font-bold cursor-default achievement-tag" style="animation-delay: 0.5s;">
+                        <i class="fas fa-brain mr-2"></i> Machine Learning
                     </span>
-                    <span class="px-6 py-3 border border-brand-purple/30 rounded-full text-brand-purple font-mono hover:bg-brand-purple/10 transition-colors cursor-default">
+                    <span class="px-6 py-3 border rounded-full font-mono font-bold cursor-default achievement-tag" style="animation-delay: 1s;">
                         <i class="fas fa-chart-line mr-2"></i> Data Visualization
+                    </span>
+                    <span class="px-6 py-3 border rounded-full font-mono font-bold cursor-default achievement-tag" style="animation-delay: 1.5s;">
+                        <i class="fas fa-bullhorn mr-2"></i> Data Storytelling
+                    </span>
+                    <span class="px-6 py-3 border rounded-full font-mono font-bold cursor-default achievement-tag" style="animation-delay: 2s;">
+                        <i class="fas fa-chess-knight mr-2"></i> Strategic Insight
+                    </span>
+                    <!-- Added from Resume -->
+                    <span class="px-6 py-3 border rounded-full font-mono font-bold cursor-default achievement-tag" style="animation-delay: 2.5s;">
+                        <i class="fas fa-vial mr-2"></i> Hypothesis Testing
                     </span>
                 </div>
             </div>
@@ -813,7 +858,7 @@
                         </div>
                         <h3 class="text-6xl font-bold text-white mb-6 group-hover:text-brand-green transition-colors hover-reveal-white">Customer Segmentation</h3>
                         <p class="text-gray-400 text-2xl mb-8 flex-grow leading-relaxed hover-reveal-gray">
-                            Analyzed 10,000+ customer data points using K-Means Clustering. Implemented PCA for dimensionality reduction and Elbow method for optimization.
+                            Analyzed 10,000+ customer data points using K-Means Clustering. Applied PCA and the Elbow method to create <strong>Cluster Heatmaps</strong> and Scatter Plots for behavioral insights.
                         </p>
                         <div class="flex justify-center gap-8 mt-auto tool-pills-container relative overflow-hidden h-20 items-end">
                             <i class="fab fa-python text-5xl text-[#3776AB] tool-pill opacity-0" title="Python"></i>
@@ -835,7 +880,7 @@
                         </div>
                         <h3 class="text-6xl font-bold text-white mb-6 group-hover:text-brand-blue transition-colors hover-reveal-white">Gen Z Data Analysis</h3>
                         <p class="text-gray-400 text-2xl mb-8 flex-grow leading-relaxed hover-reveal-gray">
-                            Market research on 70k+ respondents. Cleaned data via SQL and built Power BI dashboards to visualize career aspirations and job expectations.
+                            Market research on 70k+ respondents. Cleaned data via SQL and delivered actionable insights to the <strong>HR & Strategy Team</strong> via interactive Power BI dashboards.
                         </p>
                         <div class="flex justify-center gap-8 mt-auto tool-pills-container relative overflow-hidden h-20 items-end">
                             <i class="fas fa-chart-column text-5xl text-[#F2C811] tool-pill opacity-0" title="Power BI"></i>
@@ -974,7 +1019,7 @@
                     <!-- Languages -->
                     <div>
                         <h4 class="text-xl font-mono text-gray-500 uppercase mb-8 tracking-widest">Languages</h4>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-8"> <!-- Changed to 4 columns to fit Shell -->
                             
                             <!-- PYTHON -->
                             <div class="spotlight-card group p-6 flex items-center gap-6 cursor-default hover-target">
@@ -1027,6 +1072,21 @@
                                     <span class="text-gray-300 font-bold text-xl group-hover:text-white">R</span>
                                 </div>
                             </div>
+
+                            <!-- SHELL (Added from Resume) -->
+                            <div class="spotlight-card group p-6 flex items-center gap-6 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 shrink-0">
+                                    <i class="fas fa-terminal text-5xl text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <div class="relative z-10 flex flex-col justify-end">
+                                    <div class="h-8 mb-1 flex items-end">
+                                        <span class="font-mono text-xs text-green-500 opacity-0 group-hover:opacity-100 transition-opacity">./run.sh</span>
+                                    </div>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Shell</span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
