@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html><!DOCTYPE html><!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -385,6 +385,81 @@
             transition: stroke-dashoffset 0.8s ease;
         }
         .group:hover .r-path-mini { stroke-dashoffset: 0; }
+
+        /* --- 12. STATSMODELS MINI (Regression Line) --- */
+        .stats-mini-box {
+            width: 40px;
+            height: 30px;
+            position: relative;
+        }
+        .stats-point {
+            width: 3px;
+            height: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0.6;
+        }
+        .stats-line-mini {
+            width: 0;
+            height: 2px;
+            background: #ef4444; /* Red regression line */
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            transform: rotate(-25deg);
+            transform-origin: left bottom;
+            transition: width 0.5s ease;
+        }
+        .group:hover .stats-line-mini { width: 45px; }
+
+        /* --- 13. PINGOUIN MINI (Waddling Penguin) --- */
+        .pingouin-mini-box {
+            font-size: 1.5rem;
+            position: relative;
+            height: 30px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .penguin-icon-anim {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: #ffffff;
+        }
+        .group:hover .penguin-icon-anim {
+            opacity: 1;
+            transform: translateY(0) rotate(10deg);
+            animation: waddle 0.5s ease-in-out infinite alternate;
+        }
+        @keyframes waddle { from { transform: rotate(10deg); } to { transform: rotate(-10deg); } }
+
+        /* --- 14. NUMPY MINI (Matrix) --- */
+        .numpy-mini-box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            width: 30px;
+            height: 25px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .group:hover .numpy-mini-box { opacity: 1; }
+        .numpy-num {
+            font-family: monospace;
+            font-size: 10px;
+            color: #4ade80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .group:hover .numpy-num {
+            animation: num-pulse 0.5s linear infinite alternate;
+        }
+        .group:hover .numpy-num:nth-child(2) { animation-delay: 0.2s; }
+        @keyframes num-pulse { from { opacity: 0.3; } to { opacity: 1; } }
 
         /* --- GLITTER GLOW ANIMATION FOR TAGS --- */
         @keyframes glitter-pulse {
@@ -1113,6 +1188,23 @@
                                 </div>
                             </div>
 
+                            <!-- NUMPY (Added) -->
+                            <div class="spotlight-card group p-6 flex items-center gap-6 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 shrink-0">
+                                    <i class="fas fa-layer-group text-5xl text-gray-400 group-hover:text-[#4d77cf] transition-colors"></i>
+                                </div>
+                                <div class="relative z-10 flex flex-col justify-end">
+                                    <div class="h-8 mb-1 flex items-end">
+                                        <div class="numpy-mini-box">
+                                            <span class="numpy-num">[1]</span><span class="numpy-num">[0]</span>
+                                            <span class="numpy-num">[0]</span><span class="numpy-num">[1]</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">NumPy</span>
+                                </div>
+                            </div>
+
                             <!-- SCIKIT-LEARN -->
                             <div class="spotlight-card group p-6 flex items-center gap-6 cursor-default hover-target">
                                 <div class="spotlight-overlay"></div>
@@ -1163,7 +1255,43 @@
                                 </div>
                             </div>
 
-                            <!-- TEXTBLOB (Simple Fallback) -->
+                            <!-- STATSMODELS (Added) -->
+                            <div class="spotlight-card group p-6 flex items-center gap-6 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 shrink-0">
+                                    <i class="fas fa-calculator text-5xl text-gray-400 group-hover:text-purple-400 transition-colors"></i>
+                                </div>
+                                <div class="relative z-10 flex flex-col justify-end">
+                                    <div class="h-8 mb-1 flex items-end">
+                                        <div class="stats-mini-box">
+                                            <div class="stats-point" style="bottom: 5px; left: 5px;"></div>
+                                            <div class="stats-point" style="bottom: 15px; left: 15px;"></div>
+                                            <div class="stats-point" style="bottom: 10px; left: 25px;"></div>
+                                            <div class="stats-point" style="bottom: 25px; left: 35px;"></div>
+                                            <div class="stats-line-mini"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Statsmodels</span>
+                                </div>
+                            </div>
+
+                            <!-- PINGOUIN (Added) -->
+                            <div class="spotlight-card group p-6 flex items-center gap-6 cursor-default hover-target">
+                                <div class="spotlight-overlay"></div>
+                                <div class="relative z-10 shrink-0">
+                                    <i class="fas fa-kiwi-bird text-5xl text-gray-400 group-hover:text-white transition-colors"></i>
+                                </div>
+                                <div class="relative z-10 flex flex-col justify-end">
+                                    <div class="h-8 mb-1 flex items-end">
+                                        <div class="pingouin-mini-box">
+                                            <i class="fas fa-kiwi-bird penguin-icon-anim"></i>
+                                        </div>
+                                    </div>
+                                    <span class="text-gray-300 font-bold text-xl group-hover:text-white">Pingouin</span>
+                                </div>
+                            </div>
+
+                            <!-- TEXTBLOB -->
                             <div class="spotlight-card group p-6 flex items-center gap-6 cursor-default hover-target">
                                 <div class="spotlight-overlay"></div>
                                 <div class="relative z-10 shrink-0">
